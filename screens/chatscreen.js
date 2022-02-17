@@ -10,7 +10,7 @@ export default function Chatscreen() {
     
  
     const current= auth().currentUser.email
-    console.log(current)
+    console.log("this message from chatscreen",current)
     
 
 
@@ -35,7 +35,7 @@ export default function Chatscreen() {
              messagedata.push({
                  id:datas.id,
                  value:datas.data().message,
-                userid:datas.data().current
+                userids:datas.data().userid
                  
              });
 
@@ -93,7 +93,7 @@ else{
 
      
 
-       <Message message={data.value} key={index}  owner={current===data.userid}/>
+       <Message message={data.value} key={index}  owner={current===data.userids}/>
     
         
      
