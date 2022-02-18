@@ -46,12 +46,20 @@ const styles = StyleSheet.create({
     messageinputcontiner:{
         flexDirection:"row",
         backgroundColor:"#fff",
-        width:"100%",
+        width:"95%",
         
         borderRadius:15,
         elevation:9,
         justifyContent:"space-between",
         alignItems:"center",
+        marginBottom:5,
+        marginHorizontal:10,
+        transform: [{ rotate: '180deg'}],
+        marginTop:10,
+       
+       
+
+        
       
     },
     textbox:{

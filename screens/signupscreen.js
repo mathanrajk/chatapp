@@ -1,13 +1,16 @@
-import { StyleSheet, Text, View,Dimensions, TextInput,  TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View,Dimensions, TextInput,  TouchableOpacity,StatusBar} from 'react-native';
 import React,{useState} from 'react';
 const sw = Dimensions.get("window").width;
 const sh = Dimensions.get("window").height;
 import auth from '@react-native-firebase/auth';
+import LottieView from 'lottie-react-native';
+
 
 
 export default function Signupscreen({navigation}) {
 const[email,setemail]=useState("");
 const[password,setpassword]=useState("");
+const[loading,setloading]=useState(false);
 
 
 
@@ -18,6 +21,7 @@ auth()
     
   
   navigation.navigate("Chat");
+  setloading(false);
 })
 .catch(error => {
   if (error.code === 'auth/email-already-in-use') {
@@ -37,7 +41,16 @@ auth()
 
   return (
     <View style={styles.body}>
+        <StatusBar backgroundColor={"#015B36"}/>
         <View style={styles.logincontiner}>
+        <View style={styles.logocontiner}>
+            <View style={styles.loginlogo}>
+                <LottieView source={require("../assets/login.json")} autoPlay={true} loop={true} resizeMode={"contain"} style={{width:150,height:150}}/>
+                </View>
+                <Text style={styles.logintext}>LOGIN</Text>
+
+
+            </View>
             <Text style={styles.logintext}>SIGNUP</Text>
             <Text style={styles.titletext}>Email :</Text>
             <TextInput placeholder='Enter email' style={styles.textinput1} placeholderTextColor={"#000"}
@@ -48,7 +61,9 @@ auth()
             />
             <View style={styles.buttoncontiner}>
                 <TouchableOpacity style={styles.loginbutton} onPress={signupprocess}>
-                    <Text style={styles.titletext}>SIGNUP</Text>
+                {
+                        loading ? <ActivityIndicator size={"small"} color={"#000"}/>: <Text style={styles.titletext}>SIGNUP</Text> 
+                    }
                 </TouchableOpacity>
 
 
@@ -128,5 +143,22 @@ const styles = StyleSheet.create({
         color:"blue",
         marginLeft:5,
         textDecorationLine:"underline"
-    }
+    },
+    loginlogo:{
+        width:150,
+        height:100,
+        
+        borderRadius:100,
+        
+        
+       
+    },
+    logocontiner:{
+
+        justifyContent:"center",
+        alignItems: "center",
+        width:"100%",
+        
+    },
+   
 })

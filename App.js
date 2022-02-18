@@ -10,7 +10,7 @@ export default function App() {
  return (
 <NavigationContainer>
   <Stack.Navigator initialRouteName="Login">
-  <Stack.Screen name='Chat' component={Chatscreen} />
+  <Stack.Screen name='Chat' component={Chatscreen} options={{headerShown:false}} />
   <Stack.Screen name='Login' component={Loginscreen} options={{headerShown:false}} />
   <Stack.Screen name='Signup' component={Signupscreen}  options={{headerShown:false}}/>
 

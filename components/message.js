@@ -2,13 +2,17 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 export default function Message(props) {
-  console.log("this form message",JSON.stringify(props.owner))
+
 
 
   return (
     <View style={[styles.body ,props.owner ?{justifyContent:"flex-end",alignItems:"flex-end"}:{justifyContent:"flex-start",alignItems:"flex-start"}]}>
       <View style={[props.owner ?styles.leftside:styles.rightside]}>
+       <Text style={styles.username}>{props.username}</Text>
       <Text style={styles.textmessage}>{props.message}</Text>
+      <View style={styles.timecontainer}>  
+        <Text style={styles.timetext}>{props.time}</Text>
+      </View>
       </View>
     </View>
   )
@@ -18,7 +22,10 @@ const styles = StyleSheet.create({
     body:{
      
         width:"100%",
-        flexDirection:"row"
+        flexDirection:"row",
+        transform: [{ rotate: '180deg'}]
+        
+
     },
 
     leftside:{
@@ -28,7 +35,10 @@ const styles = StyleSheet.create({
       paddingVertical:10,
       borderTopEndRadius:10,
       borderTopStartRadius:10,
-      borderBottomLeftRadius:10
+      borderBottomLeftRadius:30,
+      marginHorizontal:10,
+      
+      borderWidth:3
 
 
     },
@@ -39,7 +49,10 @@ const styles = StyleSheet.create({
       paddingVertical:10,
       borderTopEndRadius:10,
       borderTopStartRadius:10,
-      borderBottomRightRadius:10
+      borderBottomRightRadius:30,
+      marginHorizontal:10,
+     
+      borderWidth:3
 
 
 
@@ -49,6 +62,19 @@ const styles = StyleSheet.create({
     },
 
     textmessage:{
-        fontSize:17
+        fontSize:17,
+        color:"#fff"
+    },
+    username:{
+      fontSize:10
+    },
+    timetext:{
+      fontSize:12
+    },
+    timecontainer:{
+      flexDirection:"row",
+      justifyContent:"flex-end",
+      alignItems:"flex-end"
+
     }
 })

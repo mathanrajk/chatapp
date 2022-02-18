@@ -1,16 +1,20 @@
-import { StyleSheet, Text, View ,FlatList,ActivityIndicator, ScrollView} from 'react-native'
+import { StyleSheet,StatusBar, View ,FlatList,ActivityIndicator, ScrollView, ImageBackground, KeyboardAvoidingView} from 'react-native'
 import React,{useState,useEffect} from 'react';
 import firestore from "@react-native-firebase/firestore";
 import Messageinput from '../components/messageinput';
 import Message from '../components/message';
 import auth from '@react-native-firebase/auth';
+import moment from 'moment';
+import Appbar from '../components/appbar';
 
 
-export default function Chatscreen() {
+export default function Chatscreen({navigation}) {
     
  
     const current= auth().currentUser.email
-    console.log("this message from chatscreen",current)
+    
+    const time =moment().format('LT');
+   
     
 
 
@@ -35,18 +39,31 @@ export default function Chatscreen() {
              messagedata.push({
                  id:datas.id,
                  value:datas.data().message,
-                userids:datas.data().userid
+                userids:datas.data().userid,
+                timee:datas.data().times
                  
              });
 
 
          });
-         setmessages(messagedata)
+         setmessages(messagedata.reverse())
          setloading(false)
      })
      return ()=>unsubscribe();
 
  },[])
+
+ const signout=()=>{
+        
+    auth()
+    .signOut()
+    .then(() => console.log('User signed out!'),
+    navigation.navigate("Login")
+    
+    );
+
+
+}
 
 
  
@@ -64,7 +81,8 @@ const addmessage=(message)=>{
     if(message){
         firestore().collection(roomname).doc(new Date().toString()).set(
          {message:message,
-          userid:current
+          userid:current,
+          times:time
          
          }
         
@@ -72,6 +90,17 @@ const addmessage=(message)=>{
     }
 
 };
+
+
+
+const flatlistItem=(itemdata)=>{
+    return<View>
+<Message message={itemdata.item.value}   owner={current===itemdata.item.userids} username={itemdata.item.userids} time={itemdata.item.timee}/>
+
+    </View>
+
+
+}
 
 if(loading){
 
@@ -84,23 +113,26 @@ else{
 
   return (
     <View style={styles.body}>
-        <ScrollView showsVerticalScrollIndicator={false}  >
-       
+        <StatusBar backgroundColor={"#015B36"}/>
+        <ImageBackground source={{uri:"https://i.pinimg.com/550x/45/ce/c7/45cec757faf8d07318cc829dcf21c697.jpg"}} style={{width:"100%", height:"100%",transform: [{ rotate: '180deg'}]}} >
+        <Messageinput onsentdata={addmessage}/>
+      <FlatList
+      data={messages}
+      renderItem={flatlistItem}
       
-   {
-       messages.map((data,index)=>
+ 
+      
+   
       
 
-     
 
-       <Message message={data.value} key={index}  owner={current===data.userids}/>
-    
-        
-     
-       )
-   }
-  </ScrollView>
-      <Messageinput onsentdata={addmessage}/>
+      
+      /> 
+      
+  
+
+      <Appbar signout={signout} appname={roomname}/>
+      </ImageBackground>
     </View>
   )
 }
@@ -111,6 +143,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:"flex-end",
         alignItems:"flex-start",
-        padding:5
+        
+        
     }
 })

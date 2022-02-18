@@ -1,27 +1,42 @@
-import { StyleSheet, Text, View,Dimensions, TextInput,  TouchableOpacity} from 'react-native';
-import React,{useState} from 'react';
+import { StyleSheet, Text, View,Dimensions, TextInput,  TouchableOpacity,StatusBar,ActivityIndicator,KeyboardAvoidingView} from 'react-native';
+import React,{useEffect, useState} from 'react';
 const sw = Dimensions.get("window").width;
 const sh = Dimensions.get("window").height;
 import auth from '@react-native-firebase/auth';
+import LottieView from 'lottie-react-native';
 
 
 export default function Loginscreen({navigation}) {
 const[email,setemail]=useState("");
 const[password,setpassword]=useState("");
+const[loading,setloading]=useState(false);
+useEffect(() => {
+    checklogin();
+
+},[])
+
+
+const checklogin = () => {
+    auth().onAuthStateChanged((user)=>{
+        if (user){
+            navigation.navigate("Chat");
+        }
+    })
+   
+
+}
 
 
 
 const loginprocess=()=>{
+ setloading(true);
+
     auth()
 .signInWithEmailAndPassword(email,password)
 .then(() => {
-  
-   
-
- 
-    navigation.navigate("Chat");
-     
-
+    
+navigation.navigate("Chat");
+setloading(false);
 })
 .catch(error => {
   
@@ -35,9 +50,18 @@ const loginprocess=()=>{
 
 
   return (
-    <View style={styles.body}>
+    <KeyboardAvoidingView style={styles.body}>
+        <StatusBar backgroundColor={"#015B36"}/>
         <View style={styles.logincontiner}>
-            <Text style={styles.logintext}>LOGIN</Text>
+            <View style={styles.logocontiner}>
+            <View style={styles.loginlogo}>
+                <LottieView source={require("../assets/login.json")} autoPlay={true} loop={true} resizeMode={"contain"} style={{width:150,height:150}}/>
+                </View>
+                <Text style={styles.logintext}>LOGIN</Text>
+
+
+            </View>
+            
             <Text style={styles.titletext}>Email :</Text>
             <TextInput placeholder='Enter email' style={styles.textinput1} placeholderTextColor={"#000"}
              onChangeText={text=>setemail(text)}/>
@@ -47,7 +71,10 @@ const loginprocess=()=>{
             />
             <View style={styles.buttoncontiner}>
                 <TouchableOpacity style={styles.loginbutton} onPress={loginprocess}>
-                    <Text style={styles.titletext}>LOGIN</Text>
+                    {
+                        loading ? <ActivityIndicator size={"small"} color={"#000"}/>: <Text style={styles.titletext}>LOGIN</Text> 
+                    }
+                   
                 </TouchableOpacity>
 
 
@@ -63,8 +90,9 @@ const loginprocess=()=>{
 
 
         </View>
+        
       
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -85,7 +113,7 @@ const styles = StyleSheet.create({
         flexDirection:"column",
         justifyContent:"flex-start",
         alignItems:"flex-start",
-        overflow:"hidden",
+        
         padding:10
         
         
@@ -128,5 +156,22 @@ const styles = StyleSheet.create({
         color:"blue",
         marginLeft:5,
         textDecorationLine:"underline"
-    }
+    },
+    loginlogo:{
+        width:150,
+        height:110,
+        
+        borderRadius:100,
+        
+        
+       
+    },
+    logocontiner:{
+
+        justifyContent:"center",
+        alignItems: "center",
+        width:"100%",
+        
+    },
+ 
 })
