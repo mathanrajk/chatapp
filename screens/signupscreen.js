@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,Dimensions, TextInput,  TouchableOpacity,StatusBar} from 'react-native';
+import { StyleSheet, Text, View,Dimensions, TextInput,  TouchableOpacity,StatusBar,ActivityIndicator} from 'react-native';
 import React,{useState} from 'react';
 const sw = Dimensions.get("window").width;
 const sh = Dimensions.get("window").height;
@@ -15,6 +15,7 @@ const[loading,setloading]=useState(false);
 
 
 const signupprocess=()=>{
+    setloading(true);
 auth()
 .createUserWithEmailAndPassword(email,password)
 .then(() => {
@@ -47,11 +48,11 @@ auth()
             <View style={styles.loginlogo}>
                 <LottieView source={require("../assets/login.json")} autoPlay={true} loop={true} resizeMode={"contain"} style={{width:150,height:150}}/>
                 </View>
-                <Text style={styles.logintext}>LOGIN</Text>
+                <Text style={styles.logintext}>SIGNUP</Text>
 
 
             </View>
-            <Text style={styles.logintext}>SIGNUP</Text>
+          
             <Text style={styles.titletext}>Email :</Text>
             <TextInput placeholder='Enter email' style={styles.textinput1} placeholderTextColor={"#000"}
              onChangeText={text=>setemail(text)}/>
