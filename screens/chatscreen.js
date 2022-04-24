@@ -14,6 +14,7 @@ export default function Chatscreen({navigation}) {
     const current= auth().currentUser.email
     
     const time =moment().format('LT');
+    
    
     
 
@@ -27,31 +28,33 @@ export default function Chatscreen({navigation}) {
 
  const[messages,setmessages]=useState([]); 
  const[loading,setloading]=useState(true);
- const roomname="chatroom"
+ const roomname="chatroom";
  
 
 
  
  useEffect(()=>{
-     const unsubscribe = firestore().collection(roomname).onSnapshot(datae=>{
-         const messagedata=[]
-         datae.forEach(datas=>{
-             messagedata.push({
-                 id:datas.id,
-                 value:datas.data().message,
-                userids:datas.data().userid,
-                timee:datas.data().times
-                 
-             });
+     
+    const unsubscribe = firestore().collection(roomname).onSnapshot(datae=>{
+        const messagedata=[]
+        datae.forEach(datas=>{
+            messagedata.push({
+                id:datas.id,
+                value:datas.data().message,
+               userids:datas.data().userid,
+               timee:datas.data().times
+                
+            });
 
 
-         });
-         setmessages(messagedata.reverse())
-         setloading(false)
-     })
-     return ()=>unsubscribe();
+        });
+        setmessages(messagedata.reverse())
+        setloading(false)
+    })
+    return ()=>unsubscribe();
 
- },[])
+},[])
+
 
  const signout=()=>{
         
@@ -105,8 +108,8 @@ const flatlistItem=(itemdata)=>{
 if(loading){
 
     return(
-        <ActivityIndicator size={"large"} style={styles.indicator}/>
-    )
+       <ActivityIndicator size={"large"} style={styles.indicator}/>
+   )
 }
 
 else{
@@ -134,7 +137,7 @@ else{
       <Appbar signout={signout} appname={roomname}/>
       </ImageBackground>
     </View>
-  )
+ )
 }
 }
 

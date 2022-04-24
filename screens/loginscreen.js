@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     signuptext:{
         color:"blue",
         marginLeft:5,
+        fontWeight:"bold",
         textDecorationLine:"underline"
     },
     loginlogo:{

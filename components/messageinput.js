@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
 import React,{useState} from 'react';
 import Icons from "react-native-vector-icons/MaterialIcons";
-import propTypes from 'prop-types';
 
 
 

@@ -29,21 +29,24 @@ const styles = StyleSheet.create({
     },
 
     leftside:{
-      backgroundColor:"red",
+      backgroundColor:"#0CB074",
       paddingHorizontal:10,
       marginVertical:10,
       paddingVertical:10,
       borderTopEndRadius:10,
       borderTopStartRadius:10,
       borderBottomLeftRadius:30,
-      marginHorizontal:10,
+      marginHorizontal:10, 
+      elevation:10,
+     
       
-      borderWidth:3
+
+
 
 
     },
     rightside:{
-      backgroundColor:"green",
+      backgroundColor:"#408050",
       marginVertical:10,
       paddingHorizontal:10,
       paddingVertical:10,
@@ -51,8 +54,7 @@ const styles = StyleSheet.create({
       borderTopStartRadius:10,
       borderBottomRightRadius:30,
       marginHorizontal:10,
-     
-      borderWidth:3
+      elevation:10,
 
 
 

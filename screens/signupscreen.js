@@ -71,7 +71,7 @@ auth()
 
             </View>
             <View  style={styles.buttoncontiner}>
-                <Text style={styles.titletext}>if yoy have account already ?</Text>
+                <Text style={styles.titletext}>if you have account already ?</Text>
                 <TouchableOpacity onPress={()=>{navigation.navigate("Login")}}>
                 <Text style={styles.signuptext}>login</Text>
                 </TouchableOpacity>
@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     signuptext:{
         color:"blue",
         marginLeft:5,
+        fontWeight:"bold",
         textDecorationLine:"underline"
     },
     loginlogo:{
